@@ -104,7 +104,7 @@ const Home = () => {
           >
             Learn Through AI
           </Text>
-          <Text my={"2vw"} w={"70%"} color={"white"} fontSize={"1.3vw"}>
+          <Text my={"2vw"} w={"70%"} color={"white"} fontSize={"1.3vw"} className="robotoMono" letterSpacing={"0.1vw"}>
             With LearnWise you can Learn anything you want through AI making it
             easier to learn anything you want.Try now and learn smartly.
           </Text>

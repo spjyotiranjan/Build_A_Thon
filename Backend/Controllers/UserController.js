@@ -48,13 +48,13 @@ const createUser = async (req, res) => {
       const User = await UserModel.create({
         Name,
         Email,
-        Rank,
+        Rank: 0,
         Username,
       });
       const resData = {
         Name,
         Email,
-        Rank,
+        Rank: 0,
         Username: jwt.sign(Username,process.env.SECRET)
       };
       res.status(201).json({

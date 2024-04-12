@@ -25,7 +25,7 @@ const createTopic = async (req, res) => {
     if (error) {
       res.status(400).json({ error: error.details.map((e) => e.message) });
     } else {
-      const { Name, Email, Username } = value;
+      const { TopicName, TopicDescription, SubTopics, LearnedBy } = value;
       const Topic = await TopicsModel.create({
         TopicName,
         TopicDescription,
@@ -33,14 +33,14 @@ const createTopic = async (req, res) => {
         LearnedBy,
       });
       const resData = {
-        Name,
-        Email,
-        Rank,
-        Username: jwt.sign(Username, process.env.SECRET),
+        TopicName,
+        TopicDescription,
+        SubTopics,
+        LearnedBy,
       };
       res.status(201).json({
-        message: "User Created",
-        User: resData,
+        message: "Topic Created",
+        Topic: resData,
       });
     }
   } catch (error) {
@@ -48,32 +48,36 @@ const createTopic = async (req, res) => {
       errorName = Object.keys(error.keyPattern);
       errorValue = error.keyValue[errorName];
       res.status(400).json({
-        message: "Unable to Create User",
+        message: "Unable to Create Topic",
         errorMessage: `"${errorValue}" ${errorName[0]} is already taken`,
       });
     } else {
-      res.status(500).json({ message: "Unable to create User" });
+      res.status(500).json({ message: "Unable to create Topic" });
     }
   }
 };
 
-const getSpecificTopic = async (req,res) => {
-    try {
-        const Topics = await Topics.find({
-            LearnedBy: req.params.id,
-          }).exec()
-        if(Topics.length == 0){
-            res.status(404).json({ message: "No Topics found that has been learned by the user." });
-        }else{
-            res.status(200).json({Topics})
-        }
-    } catch (error) {
-        res.status(500).json({message: "Unable to Fetch Data."})
+const getSpecificTopic = async (req, res) => {
+  try {
+    const Topics = await TopicsModel.find({
+      LearnedBy: req.params.id,
+    }).exec();
+    if (Topics.length == 0) {
+      res
+        .status(404)
+        .json({
+          message: "No Topics found that has been learned by the user.",
+        });
+    } else {
+      res.status(200).json({ Topics });
     }
-}
+  } catch (error) {
+    res.status(500).json({ message: "Unable to Fetch Data." });
+  }
+};
 
 module.exports = {
-    getAllTopics,
-    createTopic,
-    getSpecificTopic
-}
+  getAllTopics,
+  createTopic,
+  getSpecificTopic,
+};

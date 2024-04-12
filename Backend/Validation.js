@@ -2,9 +2,8 @@ const Joi = require("joi");
 
 const UserValidationSchema = Joi.object({
   Name: Joi.string().min(3).max(20).required(),
-  UserName: Joi.string().min(4).max(20).required(),
-  EmailId: Joi.string().email().required(),
-  Rank: Joi.number().required()
+  Username: Joi.string().min(4).max(20).required(),
+  Email: Joi.string().email().required(),
 });
 
 let SubTopic = Joi.object().keys({
