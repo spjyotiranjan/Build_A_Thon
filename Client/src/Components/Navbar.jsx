@@ -147,7 +147,7 @@ const Navbar = () => {
               >
                 Learn Anything
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 bgColor={"#10223000"}
                 borderRadius={"0.3vw"}
                 _hover={{
@@ -163,7 +163,7 @@ const Navbar = () => {
                 }}
               >
                 Give Quizzes
-              </MenuItem>
+              </MenuItem> */}
             </MenuList>
           </Menu>
           <Center>
@@ -197,7 +197,7 @@ const Navbar = () => {
           </Flex>
         ) : (
           <Flex w={"20%"} justify={"end"}>
-            {loginDone ? <ProfileMenu /> : <LoginButton />}
+            {isAuthenticated ? <ProfileMenu /> : <LoginButton />}
           </Flex>
         )}
       </Flex>

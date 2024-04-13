@@ -51,7 +51,6 @@ useEffect(() => {
     }
   }
 }, [user]);
-
 useEffect(() => {
   if (Object.keys(userData).length != 0) {
     setIsSocialLogin(userData.identities[0].isSocial);
@@ -64,7 +63,8 @@ useEffect(() => {
       }
     });
   }
-}, [userData,allUsers,loginDone]);
+}, [userData,loginDone]);
+// console.log(allUsers);
 
 useLayoutEffect(() => {
   if (Object.keys(userData).length != 0 && !loginDone && isAuthenticated) {
@@ -79,6 +79,7 @@ useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(true);
     }, 100); // Adjust the delay as needed
+    const timeout2 = setTimeout(()=>{navigate("/")},100)
 
     return () => clearTimeout(timeout);
   }, []);

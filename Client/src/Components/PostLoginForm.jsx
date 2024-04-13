@@ -43,7 +43,7 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
       Username: `${isSocialLogin ? input : userData.username}`,
     };
     axios
-      .post("http://localhost:3000/api/userdatas", { ...userObject })
+      .post(import.meta.env.VITE_USER_API, { ...userObject })
       .then((res) => {
         console.log(res.data);
         setInput("")
@@ -58,7 +58,7 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
   };
   useLayoutEffect(() => {
     axios
-      .get("http://localhost:3000/api/userdatas")
+      .get(import.meta.env.VITE_USER_API)
       .then((res) => {
         setAllUsers(res.data);
       })

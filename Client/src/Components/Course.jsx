@@ -36,6 +36,7 @@ const Course = () => {
   }
   async function subtopic(topic) {
     try {
+      setSubTopics([])
       setFetched(false);
       const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
@@ -98,6 +99,7 @@ const Course = () => {
   }
   async function genDescription(topic) {
     try {
+      setContent("")
       setContentFetched(false);
       const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 
@@ -301,6 +303,8 @@ const Course = () => {
       )}
       {content != "" && (
         <Tabs
+        // overflow={"auto"}
+        // className="scroll"
           isManual
           variant="soft-rounded"
           border={"3px solid #ffffff33"}

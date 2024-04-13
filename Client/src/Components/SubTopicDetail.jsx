@@ -15,6 +15,7 @@ const SubTopicDetail = ({ subTopic }) => {
 
   async function genContent(topic) {
     try {
+        setDetails("")
       setFetched(false);
       const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
 

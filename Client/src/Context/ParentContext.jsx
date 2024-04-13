@@ -12,7 +12,8 @@ const ParentContext = ({ children }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [userId, setUserId] = useState("");
   const [loggedInUser, setLoggedInUser] = useState({});
-  console.log(userId);
+  const [quizData, setQuizData] = useState("");
+
 
   useEffect(() => {
     const options = {
@@ -37,9 +38,9 @@ const ParentContext = ({ children }) => {
       });
 
     axios
-      .get("http://localhost:3000/api/userdatas")
+      .get(import.meta.env.VITE_USER_API)
       .then((res) => {
-        setAllUsers(res.data);
+        setAllUsers(res.data.Users);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +50,7 @@ const ParentContext = ({ children }) => {
   useEffect(() => {
     if (userId != "" && loginDone) {
       axios
-        .get(`http://localhost:3000/api/userdatas/${userId}`)
+        .get(`${import.meta.env.VITE_USER_API}/${userId}`)
         .then((res) => {
           setLoggedInUser(res.data.User);
         })
@@ -82,6 +83,8 @@ const ParentContext = ({ children }) => {
         setUserId,
         loggedInUser,
         setLoggedInUser,
+        quizData,
+        setQuizData
       }}
     >
       {children}

@@ -32,7 +32,7 @@ LearnWise is an innovative e-learning platform designed to revolutionize online 
 
 ## Deployment
 
-- **Backend (API) Deployment:** The backend of LearnWise is deployed on [Vercel](Deployed Link).
+- **Backend (API) Deployment:** The backend of LearnWise is deployed on [Vercel](https://learn--wise.vercel.app/).
 
 - **Frontend Deployment:** The frontend of LearnWise is deployed on [Vercel](Deployed Link).
 
