@@ -10,7 +10,7 @@ const UserRoutes = require("./Routes/UserRoutes")
 app.use(express.json());
 app.use(cors());
 app.route('/').get((req,res)=>{
-  res.send("This is Vizify Backend Route")
+  res.send("This is LearnWise Backend Route")
 })
 
 connect().then(response=>{
