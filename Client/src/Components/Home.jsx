@@ -1,15 +1,79 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Box, VStack, Text, Button, Flex, Img } from "@chakra-ui/react";
 import Background from "./../assets/Boy_Learning.jpg";
 import "./../Font.css";
 import { AppContext } from "../Context/ParentContext";
 import LearningAI from "./../assets/LearningAI.png";
 import { useNavigate } from "react-router-dom";
+import PostLoginForm from "./PostLoginForm";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios"
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate(null)
+  const [showModal, setShowModal] = useState(false);
   const exploreRef = useRef()
+  const { user, isLoading,isAuthenticated } = useAuth0();
+
+
+  const {
+    userData,
+    setUserData,
+    setLoginDone,
+    loginDone,
+    accessToken,
+    isSocialLogin,
+    setIsSocialLogin,
+    allUsers,
+    setUserId,
+    userId
+  } = useContext(AppContext);
+useEffect(() => {
+  if (!isLoading) {
+    if (accessToken != "") {
+      const options = {
+        method: "GET",
+        url: `https://${import.meta.env.VITE_AUTH0_DOMAIN}/api/v2/users`,
+        params: { q: `email:${user.email}`, search_engine: "v3" },
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      };
+      axios
+        .request(options)
+        .then((response) => {
+          setUserData(response.data[0]);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
+}, [user]);
+
+useEffect(() => {
+  if (Object.keys(userData).length != 0) {
+    setIsSocialLogin(userData.identities[0].isSocial);
+    allUsers.forEach((e) => {
+      if (e.Email === userData.email) {
+        setLoginDone(true);
+        console.log(e._id);
+        setUserId(e._id)
+        return;
+      }
+    });
+  }
+}, [userData,allUsers,loginDone]);
+
+useLayoutEffect(() => {
+  if (Object.keys(userData).length != 0 && !loginDone && isAuthenticated) {
+    setShowModal(true);
+  }
+  if (loginDone) {
+    setShowModal(false);
+  }
+}, [loginDone,allUsers,isAuthenticated]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -19,7 +83,8 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, []);
   return (
-    <Box>
+    <>
+      <PostLoginForm showModal={showModal} setShowModal={setShowModal} />
       <Box
         h={isVisible ? "90vh" : "95vh"}
         transition={"all 5s"}
@@ -137,7 +202,7 @@ const Home = () => {
           <Img src={LearningAI} w={"100%"} />
         </Flex>
       </Flex>
-    </Box>
+    </>
   );
 };
 
