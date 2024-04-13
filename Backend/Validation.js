@@ -8,13 +8,13 @@ const UserValidationSchema = Joi.object({
 });
 
 let SubTopic = Joi.object().keys({
-    SubTopicName: Joi.string().min(3).max(20).required(),
+    SubTopicName: Joi.string().required(),
     SubTopicContent: Joi.string().required(),
   })
 
 const DataValidationSchema = Joi.object({
-    TopicName: Joi.string().min(3).max(20).required(),
-    TopicDescription: Joi.string().min(5).max(3000).required(),
+    TopicName: Joi.string().required(),
+    TopicDescription: Joi.string().required(),
   SubTopics: Joi.array().items(SubTopic),
   LearnedBy: Joi.string().required()
 });
