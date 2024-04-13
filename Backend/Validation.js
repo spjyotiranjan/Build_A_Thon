@@ -4,6 +4,7 @@ const UserValidationSchema = Joi.object({
   Name: Joi.string().min(3).max(20).required(),
   Username: Joi.string().min(4).max(20).required(),
   Email: Joi.string().email().required(),
+  Points: Joi.number().min(0).required()
 });
 
 let SubTopic = Joi.object().keys({
