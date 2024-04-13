@@ -1,4 +1,4 @@
-const {UserValidationSchema} = require("./../Validation");
+const { UserValidationSchema } = require("./../Validation");
 const UserModel = require("./../Models/UserSchema");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -55,7 +55,7 @@ const createUser = async (req, res) => {
         Name,
         Email,
         Points: 0,
-        Username: jwt.sign(Username,process.env.SECRET)
+        Username: jwt.sign(Username, process.env.SECRET),
       };
       res.status(201).json({
         message: "User Created",
@@ -78,15 +78,15 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const User = await UserModel.findOneAndUpdate(
-      { Username: req.params.id },
+    const User = await UserModel.findByIdAndUpdate(
+      req.params.id,
       { $set: req.body },
       { new: false }
     );
     if (!User) {
       res.status(404).json({ message: "User not Found" });
     } else {
-      const NewUser = await UserModel.find({ Username: req.params.id });
+      const NewUser = await UserModel.findById(req.params.id);
       res.status(200).json({
         message: `User with Username ${req.params.id} is Updated`,
         OldUser: User,
