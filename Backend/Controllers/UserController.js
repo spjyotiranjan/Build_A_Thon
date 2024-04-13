@@ -45,17 +45,16 @@ const createUser = async (req, res) => {
       res.status(400).json({ error: error.details.map((e) => e.message) });
     } else {
       const { Name, Email, Username } = value;
-      const count = await UserModel.countDocuments({}).exec();
       const User = await UserModel.create({
         Name,
         Email,
-        Rank: count + 1,
+        Points: 0,
         Username,
       });
       const resData = {
         Name,
         Email,
-        Rank: count + 1,
+        Points: 0,
         Username: jwt.sign(Username,process.env.SECRET)
       };
       res.status(201).json({
