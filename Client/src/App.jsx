@@ -16,6 +16,7 @@ const App = () => {
       {/* <ChatBot/> */}
       <AllRoutes/>
       <Footer/>
+      <ChatBot/>
     </Box>
   )
 }
