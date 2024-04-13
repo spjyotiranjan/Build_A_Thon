@@ -7,7 +7,7 @@ const getAllUsers = async (req, res) => {
   try {
     const Users = await UserModel.find({});
     if (Users.length === 0) {
-      res.status(404).json({ message: "Database is Empty" });
+      res.status(404).json({ message: "Database is Empty",Users });
     } else {
       res.status(200).json(Users);
     }
