@@ -6,11 +6,7 @@ require("dotenv").config();
 const getAllUsers = async (req, res) => {
   try {
     const Users = await UserModel.find({});
-    if (Users.length === 0) {
-      res.status(404).json({ message: "Database is Empty",Users });
-    } else {
-      res.status(200).json(Users);
-    }
+    res.status(200).json({Users})
   } catch (error) {
     res.status(500).json({ message: "Unable to Fetch Data" });
   }
