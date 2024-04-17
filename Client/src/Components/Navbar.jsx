@@ -25,8 +25,8 @@ import ProfileMenu from "./ProfileMenu";
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate(null)
-  const { userData,loginDone } = useContext(AppContext);
-
+  const { userData,loginDone,loginSuccessful } = useContext(AppContext);
+  const {isLoading,isAuthenticated} = useAuth0()
 
 
   useEffect(() => {
@@ -36,7 +36,6 @@ const Navbar = () => {
   
       return () => clearTimeout(timeout);
     }, []);
-  const { user,isAuthenticated, isLoading } = useAuth0();
 
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -191,13 +190,13 @@ const Navbar = () => {
             Contact Us
           </Button>
         </Flex>
-        {isLoading ? (
+        {!loginDone && isAuthenticated ? (
           <Flex w={"20%"} justify="end">
             <Spinner color="white" />
           </Flex>
         ) : (
           <Flex w={"20%"} justify={"end"}>
-            {isAuthenticated ? <ProfileMenu /> : <LoginButton />}
+            {loginSuccessful ? <ProfileMenu /> : <LoginButton />}
           </Flex>
         )}
       </Flex>

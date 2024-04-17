@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState,useLayoutEffect } from "react";
 import axios from "axios";
 import { setCookie } from "./../Components/ManageCookies";
 
@@ -7,13 +7,14 @@ export const AppContext = createContext();
 const ParentContext = ({ children }) => {
   const [isSocialLogin, setIsSocialLogin] = useState(null);
   const [userData, setUserData] = useState({});
+  const [loginSuccessful,setLoginSuccessful] = useState(false)
   const [accessToken, setAccessToken] = useState("");
   const [loginDone, setLoginDone] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [userId, setUserId] = useState("");
   const [loggedInUser, setLoggedInUser] = useState({});
   const [quizData, setQuizData] = useState("");
-
+  console.log(loggedInUser);
 
   useEffect(() => {
     const options = {
@@ -40,7 +41,7 @@ const ParentContext = ({ children }) => {
     axios
       .get(import.meta.env.VITE_USER_API)
       .then((res) => {
-        setAllUsers(res.data.Users);
+        setAllUsers(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -84,7 +85,9 @@ const ParentContext = ({ children }) => {
         loggedInUser,
         setLoggedInUser,
         quizData,
-        setQuizData
+        setQuizData,
+        loginSuccessful,
+        setLoginSuccessful
       }}
     >
       {children}

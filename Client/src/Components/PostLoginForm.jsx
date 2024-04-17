@@ -13,6 +13,7 @@ import {
   Button,
   Text,
   Input,
+  Spinner
 } from "@chakra-ui/react";
 import axios from "axios";
 import { AppContext } from "../Context/ParentContext";
@@ -30,26 +31,35 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
     setLoginDone,
     allUsers,
     setAllUsers,
+    setLoginSuccessful
   } = useContext(AppContext);
   const { user, isLoading } = useAuth0();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [input, setInput] = useState("");
+  const [error,setError] = useState("")
+  const [loading,setLoading] = useState(false)
+
   const postData = ()=>{
+    setLoading(true)
     const Name = `${isSocialLogin ? userData.name : input}`
-    console.log(Name);
     const userObject = {
       Name: Name.slice(0,20),
       Email: userData.email,
+      Points: 0,
       Username: `${isSocialLogin ? input : userData.username}`,
     };
+    console.log(userObject);
     axios
       .post(import.meta.env.VITE_USER_API, { ...userObject })
       .then((res) => {
         console.log(res.data);
         setInput("")
         setLoginDone(true)
+        setLoginSuccessful(true)
+        setLoading(false)
       }).catch((err)=>{
-        console.log(err);
+        setLoading(false)
+        setError(err.response.data.errorMessage)
       });
   }
   const handleClose = (e) => {
@@ -78,10 +88,11 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
         // as={"flex"}
         py={"2vw"}
         backdropFilter={"auto"}
-        backdropBlur={"5px"}
+        backdropBlur={"10px"}
+        bgColor={"#ffffff1a"}
+        border={"3px solid #ffffff33"}
         borderRadius={["unset", "2xl"]}
         w={["90%", "55%", null, "40%"]}
-        bgColor={"#102230f7"}
       >
         <ModalHeader
           textAlign={"center"}
@@ -91,7 +102,7 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
         >
           New to the Website !
         </ModalHeader>
-        <ModalBody py={6} justify="center" align="center">
+        <ModalBody py={6} justify="center" align="center" >
           <Text color={"white"} fontSize={["2vw", "1.4vw"]}>
             {isSocialLogin
               ? "Please Provide a Username"
@@ -106,14 +117,18 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
             w={["70vw", "40vw", null, "25vw"]}
             h={["10vw", "5vw", null, "3vw"]}
             my={"1vw"}
-            bgColor={"#00335Ce6"}
+            bgColor={"#ffffff33"}
             outline={"none"}
-            border={"2px solid #092A44"}
+            border={"2px solid #ffffff50"}
             borderRadius={["2vw", "1vw", null, "0.5vw"]}
             textAlign={"center"}
             color={"#ffffffe6"}
+            onKeyDown={(e)=>{
+              if (e.key === "Enter") {
+                handleClose(e)
+              }
+            }}
           />
-          <Text></Text>
           <Text
             color={"#ffffff50"}
             fontStyle={"italic"}
@@ -123,6 +138,7 @@ const PostLoginForm = ({ showModal, setShowModal }) => {
             It helps us to identify you better <br />
             (You have to give this information to proceed with the website)
           </Text>
+          {loading?<Spinner/>:error!=""&& <Text color={"#ff0000"} fontWeight={"bold"}>{error}</Text>}
         </ModalBody>
 
         <ModalFooter m={"0 auto"}>

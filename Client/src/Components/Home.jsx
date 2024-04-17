@@ -16,7 +16,6 @@ const Home = () => {
   const exploreRef = useRef()
   const { user, isLoading,isAuthenticated } = useAuth0();
 
-
   const {
     userData,
     setUserData,
@@ -27,10 +26,12 @@ const Home = () => {
     setIsSocialLogin,
     allUsers,
     setUserId,
-    userId
+    userId,
+    loginSuccessful,
+    setLoginSuccessful
   } = useContext(AppContext);
 useEffect(() => {
-  if (!isLoading) {
+  if (isAuthenticated) {
     if (accessToken != "") {
       const options = {
         method: "GET",
@@ -50,20 +51,24 @@ useEffect(() => {
         });
     }
   }
-}, [user]);
+}, [user,isLoading,accessToken]);
+
 useEffect(() => {
   if (Object.keys(userData).length != 0) {
     setIsSocialLogin(userData.identities[0].isSocial);
     allUsers.forEach((e) => {
       if (e.Email === userData.email) {
         setLoginDone(true);
+        setLoginSuccessful(true)
         console.log(e._id);
         setUserId(e._id)
-        return;
+        return
+      }else{
+        setLoginDone(true)
       }
     });
   }
-}, [userData,loginDone]);
+}, [userData,allUsers]);
 // console.log(allUsers);
 
 useLayoutEffect(() => {
@@ -73,13 +78,14 @@ useLayoutEffect(() => {
   if (loginDone) {
     setShowModal(false);
   }
-}, [loginDone,allUsers,isAuthenticated]);
+}, [loginDone,userData,isAuthenticated]);
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(true);
     }, 100); // Adjust the delay as needed
-    const timeout2 = setTimeout(()=>{navigate("/")},100)
+    // const timeout2 = setTimeout(()=>{navigate("/")},100)
 
     return () => clearTimeout(timeout);
   }, []);

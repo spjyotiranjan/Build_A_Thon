@@ -27,10 +27,10 @@ const ChatBot = () => {
           {
             text: `About LearnWise
                 
-                learnWise is a website where you can learn any topic and get a overall understanding about any topic through Gemini API. Eduflex generates content about that topic in a descriptive and stepwise manner, so that user can understand the topic, or atleast get a roadmap to learn that topic. The designer and developer of LearnWise is S P Jyotiranjan Sahoo(sp,jyoti,s p, jyotiranjan)`,
+                learnWise is a website where you can learn any topic and get a overall understanding about any topic through Gemini API. Eduflex generates content about that topic in a descriptive and stepwise manner, so that user can understand the topic, or atleast get a roadmap to learn that topic. The designer and developer of LearnWise is S P Jyotiranjan Sahoo.`,
           },
           {
-            text: `To go to the main tool first you have to join through Google or any email-Password. After that you can go to Main tool by clicking on "Explore" tab of Navbar and then choose "Learn Anything Option". Once you go there, you can give any topic you want to learn in thr input option, then click Learn`,
+            text: `To go to the main tool first you have to join through Google or any email-Password. After that you can go to Main tool by clicking on "Explore" tab of Navbar and then choose "Learn Anything Option". Once you go there, you can give any topic you want to learn in the input option, then click Learn`,
           },
         ],
       },

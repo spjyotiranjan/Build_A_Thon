@@ -26,7 +26,7 @@ const ProfileMenu = () => {
     <Menu isOpen={isOpen}>
       <MenuButton
         variant={"ghost"}
-        // w={"20vw"}
+        // w={"3vw"}
         // bgColor={"green"}
         px={"0"}
         h={[null, "5vw", null, "4.4vw"]}
