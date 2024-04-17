@@ -38,6 +38,7 @@ const createUser = async (req, res) => {
     });
 
     if (error) {
+      console.log(error);
       res.status(400).json({ error: error.details.map((e) => e.message) });
     } else {
       const { Name, Email, Username } = value;
@@ -62,6 +63,7 @@ const createUser = async (req, res) => {
     if (error.keyPattern && error.keyValue) {
       errorName = Object.keys(error.keyPattern);
       errorValue = error.keyValue[errorName];
+      console.log(error);
       res.status(400).json({
         message: "Unable to Create User",
         errorMessage: `"${errorValue}" ${errorName[0]} is already taken`,
